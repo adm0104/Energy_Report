@@ -2,6 +2,27 @@ import requests
 import pandas as pd
 
 def seriesQuery(seriesNames, apiKeyLocation):
+    
+    """Used to query the Energy Information Administration (EIA) API for any weekly data series.
+
+    Inputs:
+        seriesNames:        List or Dict
+            If list, should include API series ID's for each desired element
+            EXAMPLE: seriesNames = ['PET.WCESTUS1.W']
+            If dict, should include API series ID's as dict keys, and series nicknames as dict elements (1 per key)
+            EXAMPLE: seriesNames = {'PET.WCESTUS1.W': 'Commercial Crude Oil'}
+        apiKeyLocation:     String
+            File path (as a string) for a .txt document containing an EIA API key
+            EXAMPLE: 'C:\User\key.txt'
+
+    Outputs:
+        timeSeries:         Pandas DataFrame
+            Combined timeseries data from each series requested through EIA API
+            Data will be indexed by the data collection date (per EIA weekly report), NOT reporting date
+            With list input for seriesNames, columns will be named after series ID's
+            With dict input for seriesNames, columns will be named after column nicknames
+        metaData:           Pandas DataFrame
+            Includes all header data from API response, 1 row per requested series"""
 
     if isinstance(seriesNames, dict):
         queryList = list(seriesNames.keys())
