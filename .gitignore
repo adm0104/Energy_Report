@@ -31,6 +31,7 @@ MANIFEST
 apiKey.txt
 DOE Inventories.xlsx
 table1.pdf
+EIA_Query.xlsx
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
