@@ -1,6 +1,38 @@
 import requests
 import pandas as pd
 
+class weeklyReport:
+    #   Class to store weekly report data. Input "seriesNames" from "seriesQuery" helper function
+    #   is pre-populated with the API calls needed to pull the data included in the EIA's weekly energy report.
+    #   Uses the helper function "seriesQuery" below.
+    #   Inputs:
+    #       apiKeyLocation:         String
+    #           File path (as a string) for a .txt document containing an EIA API key
+    #           EXAMPLE: 'C:\User\key.txt'
+    def __init__(self, apiKeyLocation):
+        seriesNames = {
+            'PET.WCRSTUS1.W': 'Crude Oil',
+            'PET.WCESTUS1.W': 'Crude Oil Excl. SPR',
+            'PET.WCSSTUS1.W': 'Crude Oil SPR',
+            'PET.WGTSTUS1.W': 'Total Gasoline',
+            'PET.WGRSTUS1.W': 'Reformulated Gasoline',
+            'PET.WG4ST_NUS_1.W': 'Conventional Gasoline',
+            'PET.WBCSTUS1.W': 'Blending Components',
+            'PET.W_EPOOXE_SAE_NUS_MBBL.W': 'Fuel Ethanol',
+            'PET.WKJSTUS1.W': 'Kerosene-Type Jet Fuel',
+            'PET.WDISTUS1.W': 'Distillate Fuel Oil',
+            'PET.WD0ST_NUS_1.W': 'Distillate 0 to 15 ppm sulfur',
+            'PET.WD1ST_NUS_1.W': 'Distillate 15 to 500 ppm sulfur',
+            'PET.WDGSTUS1.W': 'Distillate 500+ ppm sulfur',
+            'PET.WRESTUS1.W': 'Residual Fuel Oil',
+            'PET.WPRSTUS1.W': 'Propane/Propylene Excl. Terminal',
+            'PET.W_EPPO6_SAE_NUS_MBBL.W': 'Other Oils',
+            'PET.WUOSTUS1.W': 'Unfinished Oils',
+            'PET.WTTSTUS1.W': 'Total Stocks Incl. SPR',
+            'PET.WTESTUS1.W': 'Total Stocks Excl. SPR'
+        }
+        self.timeSeries, self.header = seriesQuery(seriesNames, apiKeyLocation)
+
 def seriesQuery(seriesNames, apiKeyLocation):
     #   Used to query the Energy Information Administration (EIA) API for any weekly data series.
     #   Inputs:
