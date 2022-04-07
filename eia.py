@@ -45,7 +45,7 @@ def seriesQuery(seriesNames, apiKeyLocation):
     #           File path (as a string) for a .txt document containing an EIA API key
     #           EXAMPLE: 'C:\User\key.txt'
     #   Outputs:
-    #       timeSeries:         Pandas DataFrame
+    #       timeSeries:         Pandas DataFrame  
     #           Combined timeseries data from each series requested through EIA API
     #           Data will be indexed by the data collection date (per EIA weekly report), NOT reporting date
     #           With list input for seriesNames, columns will be named after series ID's
@@ -62,13 +62,13 @@ def seriesQuery(seriesNames, apiKeyLocation):
     with open(apiKeyLocation) as f:
         key = f.readlines()[0]
 
-    url = 'http://api.eia.gov/series/?api_key=' + key + '&series_id=' + queryList[0]
+    url = 'https://api.eia.gov/series/?api_key=' + key + '&series_id=' + queryList[0]
     data = requests.get(url).json()
     timeSeries = pd.DataFrame(data['series'][0].pop('data'), columns = ['rawDate', data['series'][0]['series_id']])
     metaData = pd.DataFrame(data['series'])
 
     for i in queryList[1:]:
-        url = 'http://api.eia.gov/series/?api_key=' + key + '&series_id=' + i
+        url = 'https://api.eia.gov/series/?api_key=' + key + '&series_id=' + i
         data = requests.get(url).json()
         timeStore = pd.DataFrame(data['series'][0].pop('data'), columns = ['rawDate', data['series'][0]['series_id']])
         timeSeries = timeSeries.merge(timeStore)
